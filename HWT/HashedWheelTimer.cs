@@ -55,7 +55,7 @@ namespace HWT
         /// There are 10,000 ticks in a millisecond
         /// </summary>
         private readonly long _base = DateTime.UtcNow.Ticks / 10000;
-        
+
 
         private /*volatile*/ long _startTime;
         private long _pendingTimeouts = 0;
@@ -81,9 +81,9 @@ namespace HWT
         /// <param name="ticksPerWheel">the size of the wheel</param>
         /// <param name="maxPendingTimeouts">The maximum number of pending timeouts after which call to NewTimeout will result in InvalidOperationException being thrown. No maximum pending timeouts limit is assumed if this value is 0 or negative.
         /// </param>
-        public HashedWheelTimer( TimeSpan tickDuration, int ticksPerWheel, long maxPendingTimeouts)
+        public HashedWheelTimer(TimeSpan tickDuration, int ticksPerWheel, long maxPendingTimeouts)
         {
-            
+
             if (tickDuration == null)
             {
                 throw new ArgumentNullException(nameof(tickDuration), "must be greater than 0");
@@ -230,7 +230,7 @@ namespace HWT
         public ISet<Timeout> Stop()
         {
             int originalWorkerState = Interlocked.CompareExchange(ref _workerState, WORKER_STATE_SHUTDOWN, WORKER_STATE_STARTED);
-            
+
             if (originalWorkerState != WORKER_STATE_STARTED)
             {
                 return new HashSet<Timeout>();
@@ -347,7 +347,7 @@ namespace HWT
                 {
                     timeout.Remove();
                 }
-                catch (Exception t)
+                catch (Exception)
                 {
                     /*
                     if (logger.isWarnEnabled())
@@ -367,7 +367,7 @@ namespace HWT
             for (; ; )
             {
                 long currentTime = GetCurrentMs() - _startTime;
-                int sleepTimeMs = (int)Math.Truncate(deadline - currentTime + 1M); 
+                int sleepTimeMs = (int)Math.Truncate(deadline - currentTime + 1M);
 
                 if (sleepTimeMs <= 0)
                 {
@@ -392,7 +392,7 @@ namespace HWT
             return awaiter;
         }
 
-        
+
 
     }
 }

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Threading;
 
 namespace HWT
 {
@@ -84,9 +82,10 @@ namespace HWT
                 return;
             }
 
-            Task.Run(() => {
-                _task.Run(this);
-            });
+            _task.Run(this);
+            //Task.Run(() => {
+            //    _task.Run(this);
+            //});
         }
     }
 }
